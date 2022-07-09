@@ -20,3 +20,15 @@
 8. 그리고 main 브랜치로 Pull Request를 요청, 이 때 Reviewer를 설정하여 코드 리뷰를 서로 진행함
 9. 코드 리뷰가 완료된 후 main 브랜치로 merge를 함
 10. 피드백을 듣고 피드백 반영 후, 다시 위와 같은 방식을 거쳐서 다시 진행을 함
+
+## 깃 commit 메시지 컨벤션
+AngularJS의 commit 메시지 컨벤션을 사용하며 종류는 아래와 같이 구분합니다.
+```
+feat (feature)
+fix (bug fix)
+docs (documentation)
+style (formatting, missing semi colons, …)
+refactor
+test (when adding missing tests)
+chore (maintain)
+```
