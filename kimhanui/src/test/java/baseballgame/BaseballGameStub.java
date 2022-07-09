@@ -1,6 +1,7 @@
 package baseballgame;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 public class BaseballGameStub extends BaseballGame implements BaseballGameInterface {
 

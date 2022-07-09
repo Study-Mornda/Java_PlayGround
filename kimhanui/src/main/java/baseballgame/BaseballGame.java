@@ -5,8 +5,6 @@ import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BaseballGame {
-
-    private BaseballGameInterface baseballGameInterface;
     private String answer = "";
     private int[] strikeAr;
     private int[] ballAr;
