@@ -41,6 +41,25 @@ public class RefereeTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @DisplayName("심판은 같은 수가 다른 자리에 있으면 볼임을 알랴줘야 한다.")
+    @ParameterizedTest(name = "실제 값: {1}, 추측 값: {2}, 볼 개수: {0}")
+    @CsvSource(value = {
+            "0,123,123",
+            "1,123,345",
+            "2,123,321",
+            "3,123,312"
+    }, delimiter = ',')
+    void countBall(int actual, String answer, String guess) {
+        // given
+        Referee referee = new Referee(split(answer));
+
+        // when
+        int expected = referee.countBall(split(guess));
+
+        // that
+        assertThat(actual).isEqualTo(expected);
+    }
+
     private List<Integer> split(String number) {
         return number.chars().boxed()
                 .map(e -> e - '0')
