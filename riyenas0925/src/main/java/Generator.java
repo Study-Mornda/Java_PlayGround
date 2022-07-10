@@ -3,7 +3,11 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Generator {
-    private List<Integer> pickedNumber = new ArrayList<>();
+    private List<Integer> pickedNumber;
+
+    public Generator() {
+        pickedNumber = new ArrayList<>();
+    }
 
     public List<Integer> pickedNumber() {
         while(pickedNumber.size() < 3) {
