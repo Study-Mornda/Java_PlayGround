@@ -8,6 +8,13 @@ public class Referee {
         this.answer = answer;
     }
 
+    public JudgeResult judge(List<Integer> guess) {
+        return new JudgeResult(
+                countStrike(guess),
+                countBall(guess)
+        );
+    }
+
     public int countStrike(List<Integer> guess) {
         int cnt = 0;
 

@@ -60,6 +60,25 @@ public class RefereeTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @DisplayName("심판은 스트라이크와 볼의 개수를 알려줘야 한다.")
+    @ParameterizedTest(name = "실제 값: {0}, 추측 값: {1}, 스트라이크 개수: {2}, 볼 개수: {3}")
+    @CsvSource(value = {
+            "425,123,1,0",
+            "425,456,1,1",
+            "425,789,0,0"
+    }, delimiter = ',')
+    void judge(String answer, String guess, int actualStrike, int actualBall) {
+        // given
+        Referee referee = new Referee(split(answer));
+
+        // when
+        JudgeResult expected = referee.judge(split(guess));
+
+        // that
+        assertThat(actualStrike).isEqualTo(expected.getStrike());
+        assertThat(actualBall).isEqualTo(expected.getBall());
+    }
+
     private List<Integer> split(String number) {
         return number.chars().boxed()
                 .map(e -> e - '0')
