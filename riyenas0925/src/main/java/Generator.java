@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Generator {
     private List<Integer> pickedNumber = new ArrayList<>();
@@ -17,7 +18,7 @@ public class Generator {
     }
 
     private int randNumberExcludeZero() {
-        return (int) (Math.random() * 10 + 1) % 9;
+        return ThreadLocalRandom.current().nextInt(1, 10);
     }
 
     private boolean containsNumber(int number) {
