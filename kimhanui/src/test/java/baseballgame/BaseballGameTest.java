@@ -1,11 +1,11 @@
 package baseballgame;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 
 import static java.lang.Integer.parseInt;
@@ -14,27 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * [2] 숫자야구게임 구현
  */
-public class BaseballGameTest {
-
-    /**
-     * FIXME: 입출력을 고려했지만 의미있는 테스트인지 확신없음
-     * 참고: https://choichumji.tistory.com/118
-     */
-    @Test
-    void inputNumberTest(){
-        //given
-        String outputMsg = "숫자를 입력해 주세요 : ";
-        String input = "123";
-        OutputStream out = new ByteArrayOutputStream(); // out변수에 출력되는 msg를 기록
-        System.setOut(new PrintStream(out));
-
-        //when
-        BaseballGameStub baseballGame = new BaseballGameStub();
-        baseballGame.inputNumber();
-
-        //then
-        assertThat(out.toString()).isEqualTo(outputMsg + input);
-    }
+public class BaseballGameTest { // TODO: 책임 분리 필요
+    int[] strikeCnt;
+    int[] ballCnt;
 
     @ParameterizedTest
     @CsvSource(value={"123:123:3", "123:222:1", "123:342:0"}, delimiter=':')
@@ -44,12 +26,15 @@ public class BaseballGameTest {
         assertThat(strikeCnt).isEqualTo(parseInt(expected));
     }
 
-    @ParameterizedTest
-    @CsvSource(value={"123:123:3", "123:222:3", "123:342:2", "123:444:0"}, delimiter=':')
+    @ParameterizedTest(name = "정답:{0}, 시도한 값:{1}일 경우, 볼 개수:{2}")
+    @CsvSource(value={"123:444:0", "123:245:1", "123:342:2", "123:123:0"}, delimiter=':')
     void cntBallTest(String answer, String tried, String expected){
-        int[] cntAr = new int[10];
-        int ballCnt = cntBall(cntAr, answer, tried);
-        assertThat(ballCnt).isEqualTo(parseInt(expected));
+        strikeCnt = new int[10];
+        ballCnt = new int[10];
+        int actualBallCnt = cntBall(ballCnt, answer, tried);
+        assertThat(actualBallCnt).isEqualTo(parseInt(expected));
+        strikeCnt = null;
+        ballCnt= null;
     }
 
     /**
@@ -86,18 +71,19 @@ public class BaseballGameTest {
     }
 
     private int cntBall(int[] cntAr, String answer, String tried){
-        cntStrike(cntAr, answer, tried);
+        cntStrike(strikeCnt, answer, tried);
         for(int i=0;i<3;i++){
             int n1 = answer.charAt(i)-'0';
-            cntBallForOne(cntAr, n1, tried);
+            cntBallForOne(ballCnt, n1, tried);
         }
         return Arrays.stream(cntAr).sum();
     }
+
     /**
      * 같은 숫자에 대해 cnt 중복 합산 피하기위해 ballCnt(1D int array)사용
      */
     private void cntBallForOne(int[] ballCnt, int n1, String s2){
-        if(ballCnt[n1] > 0) return;
+        if(strikeCnt[n1] > 0) return;
         for(int i=0;i<3;i++){
             int n2 = s2.charAt(i)-'0';
             cntSame(ballCnt, n1, n2);

@@ -9,10 +9,6 @@ public class BaseballGame {
     private int[] strikeAr;
     private int[] ballAr;
     public BaseballGame(){
-        start();
-    }
-
-    public void start(){
         while(true) {
             setAnswer();
             String input = inputNumber();
