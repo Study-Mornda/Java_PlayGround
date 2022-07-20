@@ -19,10 +19,20 @@ public class Balls {
         return balls;
     }
 
+    public PlayResult play(List<Integer> userBalls) {
+        Balls userBall = new Balls(userBalls);
+        PlayResult result = new PlayResult();
+        for (Ball balls : balls) {
+            BallStatus status = userBall.play(balls);
+            result.report(status);
+        }
+        return result;
+    }
+
     public BallStatus play(Ball userBall) {
         return balls.stream()
                 .map(com -> com.play(userBall))
-                .filter(status -> status != BallStatus.NOTHING)
+                .filter(BallStatus::isNotNothing)
                 .findFirst()
                 .orElse(BallStatus.NOTHING);
     }
